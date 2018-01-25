@@ -16,6 +16,8 @@ public class UserDTO {
 	
 	private int firebaseId;
 	
+	private String salt;
+	
 	private ResponsibleDTO dto;
 	
 	private Vital vital;
@@ -90,6 +92,14 @@ public class UserDTO {
 
 	public void setVital(Vital vital) {
 		this.vital = vital;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 }
