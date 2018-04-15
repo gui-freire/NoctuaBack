@@ -117,9 +117,9 @@
 
 			<Resource name="jdbc/sqlserv" auth="Container"
 				factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
-				driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" type="javax.sql.DataSource"
-				maxActive="50" maxIdle="10" maxWait="15000" username="sa" password="noctua"
-				url="jdbc:sqlserver://127.0.0.1:1433;databaseName=BDNoctua;"
+				driverClassName="oracle.jdbc.driver.OracleDriver" type="javax.sql.DataSource"
+				maxActive="50" maxIdle="10" maxWait="15000" username="system" password="noctua"
+				url="jdbc:sqlserver://localhost:1521;databaseName=noctua108;"
 				removeAbandoned="true" removeAbandonedTimeout="30" logAbandoned="true" />
 
 		</Engine>

@@ -9,6 +9,39 @@
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>${basedir}/src/main/java</directory>
+							<targetPath>WEB-INF/classes</targetPath>
+							<includes>
+								<include>**/*.properties</include>
+								<include>**/*.xml</include>
+								<include>**/*.css</include>
+								<include>**/*.html</include>
+							</includes>
+						</resource>
+						<resource>
+							<directory>${basedir}/lib</directory>
+							<targetPath>WEB-INF/lib</targetPath>
+							<includes>
+								<include>**/*.jar</include>
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.7.0</version>
 				<configuration>
@@ -52,14 +85,6 @@
 			<version>1.10</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
-		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<version>6.5.1.jre9-preview</version>
-		</dependency>
-
-
 		<dependency>
 			<groupId>com.google.firebase</groupId>
 			<artifactId>firebase-admin</artifactId>
@@ -67,9 +92,24 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc</artifactId>
+			<version>14</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/ojdbc8.jar</systemPath> <!-- must match file name -->
+		</dependency>
+
+		<dependency>
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client</artifactId>
 			<version>1.23.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

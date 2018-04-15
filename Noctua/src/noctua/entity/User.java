@@ -1,13 +1,15 @@
-package noctua.dto;
+package noctua.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="USUARIO")
-public class UserDTO {
+public class User {
 
 	@Id
 	@Column(name="id_user")
@@ -50,6 +52,14 @@ public class UserDTO {
 		this.name = name;
 	}
 
+	public long getId_resp() {
+		return id_resp;
+	}
+
+	public void setId_resp(long id_resp) {
+		this.id_resp = id_resp;
+	}
+
 	public String getSurname() {
 		return surname;
 	}
@@ -74,36 +84,12 @@ public class UserDTO {
 		this.password = password;
 	}
 
-	public boolean isResp() {
-		return resp;
-	}
-
-	public void setResp(boolean resp) {
-		this.resp = resp;
-	}
-
-	public int getFirebaseId() {
+	public long getFirebaseId() {
 		return firebaseId;
 	}
 
-	public void setFirebaseId(int firebaseId) {
+	public void setFirebaseId(long firebaseId) {
 		this.firebaseId = firebaseId;
-	}
-
-	public ResponsibleDTO getDto() {
-		return dto;
-	}
-
-	public void setDto(ResponsibleDTO dto) {
-		this.dto = dto;
-	}
-
-	public Vital getVital() {
-		return vital;
-	}
-
-	public void setVital(Vital vital) {
-		this.vital = vital;
 	}
 
 	public String getSalt() {
@@ -113,5 +99,6 @@ public class UserDTO {
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-
+	
+	
 }
