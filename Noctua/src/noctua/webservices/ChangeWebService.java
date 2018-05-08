@@ -10,12 +10,13 @@ import javax.ws.rs.core.MediaType;
 
 import noctua.dto.ResponsibleDTO;
 import noctua.dto.UserDTO;
+import noctua.impl.service.ChangeServiceImpl;
 import noctua.service.ChangeService;
 
 @Path("/mudar")
 public class ChangeWebService {
 
-	private ChangeService service;
+	private ChangeService service = new ChangeServiceImpl();
 	private Logger LOG;
 
 	@GET

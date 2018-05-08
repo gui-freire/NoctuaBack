@@ -6,10 +6,9 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
         <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
-        <property name="hibernate.connection.datasource">java:comp/env/jdbc/sqlserv</property>
+        <property name="hibernate.connection.username">system</property>
+        <property name="hibernate.connection.password">noctua</property>
+        <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:noctua108;</property>
         <property name="hibernate.current_session_context_class">thread</property>
-        
-        <!-- Mapping with model class containing annotations -->
-	<mapping class="com.journaldev.servlet.hibernate.model.Employee"/>
     </session-factory>
 </hibernate-configuration>

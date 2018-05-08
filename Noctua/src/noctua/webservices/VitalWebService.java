@@ -23,6 +23,7 @@ public class VitalWebService {
 	@GET
 	@Path("/ultimo")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Vital searchLast(@PathParam("email") String email) { // busca os últimos dados no banco
 		Vital vital;
 		vital = vitalService.searchLast(email);
@@ -31,6 +32,8 @@ public class VitalWebService {
 
 	@GET
 	@Path("/diario")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public List<Vital> searchDaily(@PathParam("email") String email,
 			@PathParam("dia") int day,
 			@PathParam("mes") int month) {
@@ -40,6 +43,8 @@ public class VitalWebService {
 
 	@GET
 	@Path("/semanal")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public List<Vital> searchWeekly(@PathParam("email") String email,
 			@PathParam("semana") int week, 
 			@PathParam("mes") int month) {
@@ -49,6 +54,8 @@ public class VitalWebService {
 
 	@GET
 	@Path("/mensal")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public List<Vital> searchMonthly(@PathParam("email") String email, 
 			@PathParam("mes") int month) {
 		vitalList = vitalService.searchMonthly(email, month);

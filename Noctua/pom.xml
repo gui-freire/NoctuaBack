@@ -93,7 +93,7 @@
 
 		<dependency>
 			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc</artifactId>
+			<artifactId>ojdbc</artifactId> <!-- XML para gerenciar driver do banco de dados -->
 			<version>14</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/ojdbc8.jar</systemPath> <!-- must match file name -->
@@ -111,5 +111,11 @@
 			<version>1.0.2</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>LATEST</version>
+    </dependency>
 	</dependencies>
 </project>

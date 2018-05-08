@@ -1,18 +1,18 @@
 package noctua.impl.dao;
 
 import java.sql.Date;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.EntityManager;
 
 import noctua.dao.DiaryDao;
-import noctua.entity.Diary;
+import noctua.dto.Diary;
 
 public class DiaryDaoImpl implements DiaryDao {
 
 	private EntityManager em;
 	
-	private Diary diaryEntity = new Diary();
+	private Diary dto;
 	
 	public DiaryDaoImpl(EntityManager em) {
 		this.em = em;
@@ -20,12 +20,12 @@ public class DiaryDaoImpl implements DiaryDao {
 	
 	@Override
 	public void sendDiary(String email, String diary, String feel, Date date) {
-		diaryEntity.setData(date);
-		diaryEntity.setDiary(diary);
-		diaryEntity.setFeeling(feel);
+		dto.setData(date);
+		dto.setDiary(diary);
+		dto.setFeeling(feel);
 		
 		em.getTransaction().begin();
-		em.persist(diaryEntity);
+		em.persist(dto);
 		em.getTransaction().commit();
 	}
 

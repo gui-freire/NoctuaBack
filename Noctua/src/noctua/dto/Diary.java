@@ -1,4 +1,4 @@
-package noctua.entity;
+package noctua.dto;
 
 import java.sql.Date;
 
@@ -9,30 +9,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 @Entity
 @Table(name="DIARIO")
 public class Diary {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="id")
 	private long id;
 	
 	@Column(name="feeling")
+	@JsonProperty("sentimento")
 	private String feeling;
 	
 	@Column(name="diary")
+	@JsonProperty("diario")
 	private String diary;
 	
 	@Column(name="data_dia_mes")
+	@JsonProperty("data")
 	private Date data;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getFeeling() {
 		return feeling;
@@ -57,6 +55,11 @@ public class Diary {
 	public void setData(Date data) {
 		this.data = data;
 	}
+
+	public long getId() {
+		return id;
+	}
 	
 	
+
 }

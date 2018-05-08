@@ -12,9 +12,9 @@ public class PasswordServiceImpl implements PasswordService {
 
 	private MessageDigest digest;
 
-	private byte[] newPassword;
+	private byte[] newPassword = {};
 
-	private String cripted;
+	private String cripted = new String();
 
 	private Logger LOG;
 
@@ -31,7 +31,7 @@ public class PasswordServiceImpl implements PasswordService {
 			newPassword = digest.digest(password.getBytes());
 			cripted = newPassword.toString() + salt;
 
-			cripted.concat("|" + salt); // separa o salt para ser armazenado no banco de dados
+			cripted.concat("|" + salt);
 			return cripted;
 		} catch (Exception e) {
 			LOG.info("Algo deu errado na criptografia: " + e.getMessage());

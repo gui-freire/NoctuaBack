@@ -1,6 +1,8 @@
 package noctua.service;
 
+import noctua.dto.Diary;
+
 public interface DiaryService {
 
-	public int sendDiary(String email, String diary, String feel, int day, int month);
+	public int sendDiary(Diary diary);
 }

@@ -2,6 +2,7 @@ package noctua.impl.service;
 
 import java.util.logging.Logger;
 
+import noctua.dto.Diary;
 import noctua.service.DiaryService;
 
 public class DiaryServiceImpl implements DiaryService {
@@ -9,8 +10,8 @@ public class DiaryServiceImpl implements DiaryService {
 	private Logger LOG;
 
 	@Override
-	public int sendDiary(String email, String diary, String feel, int day, int month) {
-		if (email.isEmpty() || email == null || email.equals("")) {
+	public int sendDiary(Diary diary) {
+		if (diary.getId() == 0 || diary == null) {
 			LOG.info("Email vazio");
 			return 400;
 		}

@@ -47,7 +47,7 @@
 			and responses are returned. Documentation at : Java HTTP Connector: /docs/config/http.html 
 			Java AJP Connector: /docs/config/ajp.html APR (HTTP/AJP) Connector: /docs/apr.html 
 			Define a non-SSL/TLS HTTP/1.1 Connector on port 8080 -->
-		<Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1"
+		<Connector connectionTimeout="600000" port="8080" protocol="HTTP/1.1"
 			redirectPort="8443" />
 		<!-- A "Connector" using the shared thread pool -->
 		<!-- <Connector executor="tomcatThreadPool" port="8080" protocol="HTTP/1.1" 
@@ -114,14 +114,6 @@
 				<Context docBase="Noctua" path="/Noctua" reloadable="true"
 					source="org.eclipse.jst.jee.server:Noctua" />
 			</Host>
-
-			<Resource name="jdbc/sqlserv" auth="Container"
-				factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
-				driverClassName="oracle.jdbc.driver.OracleDriver" type="javax.sql.DataSource"
-				maxActive="50" maxIdle="10" maxWait="15000" username="system" password="noctua"
-				url="jdbc:sqlserver://localhost:1521;databaseName=noctua108;"
-				removeAbandoned="true" removeAbandonedTimeout="30" logAbandoned="true" />
-
 		</Engine>
 	</Service>
 </Server>

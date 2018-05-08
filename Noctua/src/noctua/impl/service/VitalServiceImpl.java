@@ -74,4 +74,16 @@ public class VitalServiceImpl implements VitalService {
 		}
 	}
 
+	@Override
+	public void receiveData(Vital vital) {
+		if(vital == null) {
+			LOG.info("Dados enviados vazios");
+		}
+		try {
+			
+		} catch(Exception e) {
+			LOG.info("Algo deu errado ao enviar dados para a base. " + e.getMessage());
+		}
+	}
+
 }

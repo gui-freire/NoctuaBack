@@ -13,4 +13,6 @@ public interface VitalDao {
 	public List<Vital> searchWeekly(String email, int week, int month);
 	
 	public List<Vital> searchMonthly(String email, int month);
+	
+	public void receiveData(Vital vital);
 }

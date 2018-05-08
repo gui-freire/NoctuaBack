@@ -2,7 +2,7 @@ package noctua.dao;
 
 import java.sql.Date;
 
-import noctua.entity.Diary;
+import noctua.dto.Diary;
 
 public interface DiaryDao {
 

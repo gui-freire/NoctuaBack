@@ -6,6 +6,6 @@ public interface UserService {
 
 	public UserDTO searchUser(String email, String password, String firebase);
 
-	public int createUser(UserDTO user);
+	public void createUser(UserDTO user);
 
 }
