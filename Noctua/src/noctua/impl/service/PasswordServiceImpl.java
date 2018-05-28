@@ -2,7 +2,9 @@ package noctua.impl.service;
 
 import java.security.MessageDigest;
 import java.security.SecureRandom;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import noctua.service.PasswordService;
 
@@ -10,13 +12,13 @@ public class PasswordServiceImpl implements PasswordService {
 
 	private SecureRandom salt = new SecureRandom();
 
-	private MessageDigest digest;
-
 	private byte[] newPassword = {};
 
 	private String cripted = new String();
 
-	private Logger LOG;
+	private Logger LOG = LoggerFactory.getLogger(PasswordServiceImpl.class);
+	
+	private static final byte BYTES[] = new byte[20];
 
 	@Override
 	public String saltPassword(String password) {
@@ -24,12 +26,13 @@ public class PasswordServiceImpl implements PasswordService {
 			LOG.info("Senha vazia");
 			return null;
 		}
-
+		
 		try {
 			LOG.info("Iniciando criptografia");
-			digest = MessageDigest.getInstance("SHA-256");
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 			newPassword = digest.digest(password.getBytes());
-			cripted = newPassword.toString() + salt;
+			salt.nextBytes(BYTES);;
+			cripted = newPassword.toString() + salt.getSeed(20);
 
 			cripted.concat("|" + salt);
 			return cripted;
@@ -53,7 +56,7 @@ public class PasswordServiceImpl implements PasswordService {
 
 		try {
 			LOG.info("Inciando criptografia");
-			digest = MessageDigest.getInstance("SHA-256");
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
 			password.concat(salt);
 			newPassword = digest.digest(password.getBytes());

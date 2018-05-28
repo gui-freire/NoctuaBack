@@ -8,38 +8,23 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-@Entity
-@Table(name="USUARIO")
 public class UserDTO {
 
-	@Id
-	@Column(name="id_user")
-	private long id;
-	
 	@JsonProperty("name")
-	@Column(name="name")
 	private String name;
 	
-	@Column(name="id_resp")
-	private long id_resp;
-	
 	@JsonProperty("surname")
-	@Column(name="surname")
 	private String surname;
 	
 	@JsonProperty("email")
-	@Column(name="email")
 	private String email;
 	
 	@JsonProperty("password")
-	@Column(name="password")
 	private String password;
 	
 	@JsonProperty("firebaseId")
-	@Column(name="firebaseId")
 	private long firebaseId;
 	
-	@Column(name="salt")
 	private String salt;
 	
 	@JsonProperty("resp")
@@ -50,14 +35,6 @@ public class UserDTO {
 //	private ResponsibleDTO dto;
 	
 //	private Vital vital;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

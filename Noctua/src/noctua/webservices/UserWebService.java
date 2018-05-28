@@ -1,7 +1,5 @@
 package noctua.webservices;
 
-import java.util.logging.Logger;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,7 +8,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.jvnet.hk2.annotations.Service;
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.jboss.logging.Logger;
 
 import noctua.dto.UserDTO;
 import noctua.impl.service.UserServiceImpl;
@@ -21,7 +20,7 @@ public class UserWebService {
 
 	private UserService userService = new UserServiceImpl();
 	
-	private Logger LOG;
+	private Logger LOG = LoggerFactory.logger(UserWebService.class);
 
 	@GET
 	@Path("/buscarUsuario")

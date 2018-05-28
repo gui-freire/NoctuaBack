@@ -1,20 +1,32 @@
 package noctua.impl.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.jboss.logging.Logger;
+
 import noctua.dao.UserDao;
 import noctua.dto.UserDTO;
+import noctua.entity.UserEntity;
+import noctua.webservices.UserWebService;
 
 public class UserDaoImpl implements UserDao {
 
 	private EntityManager em;
 	
+	private Logger LOG = LoggerFactory.logger(UserDaoImpl.class);
+	
 	public UserDaoImpl(EntityManager em) {
 		this.em = em;
 	}
 	
+	public UserDaoImpl() {
+
+	}
+
 	@Override
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
@@ -28,16 +40,20 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void createUser(UserDTO user) {
+	public void createUser(UserEntity user) {
+		try{
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
 		em.close();
+		} catch(Exception sql) {
+			LOG.error(sql.getLocalizedMessage());
+		}
 
 	}
 
 	@Override
-	public void updateUser(UserDTO user) {
+	public void updateUser(UserEntity user) {
 		// TODO Auto-generated method stub
 
 	}
