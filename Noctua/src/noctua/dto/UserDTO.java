@@ -1,5 +1,7 @@
 package noctua.dto;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,11 +32,11 @@ public class UserDTO {
 	@JsonProperty("resp")
 	private boolean resp;
 	
-//	@JsonProperty("responsible")
-//	@Nullable
-//	private ResponsibleDTO dto;
+	@JsonProperty("responsible")
+	@Nullable
+	private ResponsibleDTO dto;
 	
-//	private Vital vital;
+	private Vital vital;
 
 	public String getName() {
 		return name;

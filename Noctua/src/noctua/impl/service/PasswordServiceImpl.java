@@ -31,10 +31,11 @@ public class PasswordServiceImpl implements PasswordService {
 			LOG.info("Iniciando criptografia");
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 			newPassword = digest.digest(password.getBytes());
-			salt.nextBytes(BYTES);;
-			cripted = newPassword.toString() + salt.getSeed(20);
+			salt.nextBytes(BYTES);
+			String saltGenerated = SecureRandom.getSeed(20).toString();
+			cripted = newPassword.toString() + saltGenerated;
 
-			cripted.concat("|" + salt);
+			cripted.concat("||").concat(saltGenerated);
 			return cripted;
 		} catch (Exception e) {
 			LOG.info("Algo deu errado na criptografia: " + e.getMessage());

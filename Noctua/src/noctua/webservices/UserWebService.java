@@ -36,11 +36,13 @@ public class UserWebService {
 	@POST
 	@Path("/criarUsuario")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void createUser(UserDTO dto) {
+	public int createUser(UserDTO dto) {
 		try {
 			userService.createUser(dto);
+			return 200;
 		} catch (Exception e) {
 			LOG.info("Algo deu errado! " + e.getMessage());
+			return 400;
 		}
 	}
 	
