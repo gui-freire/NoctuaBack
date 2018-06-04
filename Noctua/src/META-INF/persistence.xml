@@ -5,9 +5,9 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
 		<class>noctua.entity.UserEntity</class>
-		<class>noctua.dto.Diary</class>
-		<class>noctua.dto.Vital</class>
-		<class>noctua.dto.ResponsibleDTO</class>
+		<class>noctua.entity.DiaryEntity</class>
+		<class>noctua.entity.ResponsibleEntity</class>
+		<class>noctua.entity.VitalEntity</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:noctua108"/>

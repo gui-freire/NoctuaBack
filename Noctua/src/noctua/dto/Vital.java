@@ -1,6 +1,8 @@
 package noctua.dto;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,31 +13,39 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-@Entity
-@Table(name="VITAL")
-public class Vital {
-	
-	@Id
-	@Column(name="id_vital")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+import noctua.entity.VitalEntity;
 
-	@Column(name="heartbeat")
+public class Vital {
+
 	@JsonProperty("bpm")
 	private String heartbeat;
 
 	@Column(name="pression")
 	private String pression;
 
-	@Column(name="oxigenation")
 	@JsonProperty("oxigenacao")
 	private String oxig;
 	
 	@JsonProperty("usuario")
-	private String idUsuario;
+	private UserDTO idUsuario;
 	
-	@Column(name="DATA_HORA_PROC")
-	private Timestamp data;
+	@JsonProperty("data")
+	private Date data;
+	
+	public Vital() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Vital(VitalEntity vital) {
+		this.heartbeat = vital.getHeartbeat();
+		this.pression = vital.getPression();
+		this.oxig = vital.getOxig();
+		this.idUsuario = new UserDTO(vital.getIdUsuario());
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(vital.getYear(), vital.getMonth(), vital.getDay());
+		this.data = cal.getTime();
+	}
 
 	public String getHeartbeat() {
 		return heartbeat;
@@ -61,24 +71,20 @@ public class Vital {
 		this.oxig = oxig;
 	}
 
-	public String getIdUsuario() {
+	public UserDTO getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(String idUsuario) {
+	public void setIdUsuario(UserDTO idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
-	public Timestamp getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(Timestamp data) {
+	public void setData(Date data) {
 		this.data = data;
-	}
-
-	public long getId() {
-		return id;
 	}
 
 	

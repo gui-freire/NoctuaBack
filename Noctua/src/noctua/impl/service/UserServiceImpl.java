@@ -7,6 +7,7 @@ import javax.persistence.Persistence;
 
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.hibernate.cfg.Configuration;
+import org.mindrot.jbcrypt.BCrypt;
 
 import noctua.dao.UserDao;
 import noctua.dto.UserDTO;
@@ -38,23 +39,15 @@ public class UserServiceImpl implements UserService {
 			return null;
 		} else {
 			try {
-				UserDTO dto = new UserDTO();
-
 				String userPassword;
 
-				String cryptedPassword;
-
-				String salt;
-
-				dto = dao.searchUser(email, password, firebase).get(0);
-
-				salt = dto.getSalt();
+				UserEntity user = dao.searchUser(email).get(0);
+				
+				UserDTO dto = new UserDTO(user);
 
 				userPassword = dto.getPassword();
 
-				cryptedPassword = passwordService.checkPassword(password, salt);
-
-				if (userPassword.equals(cryptedPassword)) { 
+				if (BCrypt.checkpw(userPassword, password)) { 
 					return dto;
 				} else {
 					dto = new UserDTO();
@@ -75,16 +68,10 @@ public class UserServiceImpl implements UserService {
 		} else {
 			try {
 				String criptedPassword = new String();
-				String salt = new String();
-				String[] password = {};
 				
 				criptedPassword = passwordService.saltPassword(user.getPassword());
-				password = criptedPassword.split("|"); 
-				salt = password[1];
-				criptedPassword = password[0];
 
 				user.setPassword(criptedPassword);
-				user.setSalt(salt);
 				UserEntity entity = new UserEntity(user);
 				dao.createUser(entity);
 			} catch (Exception e) {

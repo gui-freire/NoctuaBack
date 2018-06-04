@@ -1,38 +1,36 @@
 package noctua.impl.dao;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import noctua.dao.DiaryDao;
 import noctua.dto.Diary;
+import noctua.entity.DiaryEntity;
 
 public class DiaryDaoImpl implements DiaryDao {
 
 	private EntityManager em;
 	
-	private Diary dto;
-	
-	public DiaryDaoImpl(EntityManager em) {
-		this.em = em;
+	public DiaryDaoImpl() {
 	}
 	
 	@Override
-	public void sendDiary(String email, String diary, String feel, Date date) {
-		dto.setData(date);
-		dto.setDiary(diary);
-		dto.setFeeling(feel);
-		
+	public void sendDiary(DiaryEntity diary) {
 		em.getTransaction().begin();
-		em.persist(dto);
+		em.persist(diary);
 		em.getTransaction().commit();
 	}
 
 	@Override
-	public Diary searchDiary(String email, int day, int month) {
-		// TODO Auto-generated method stub
-		return null;
+	public Diary searchDiary(DiaryEntity diary) {
+		List<Diary> list = this.em.createQuery("SELECT D FROM DIARY C WHERE D.ID = " + diary.getId()).getResultList();
+		return list.get(0);
+	}
+	
+	@Override
+	public void setEntityManager(EntityManager em) {
+		this.em = em;
 	}
 
 }

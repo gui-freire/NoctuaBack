@@ -1,38 +1,29 @@
 package noctua.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.codehaus.jackson.annotate.JsonProperty;
 
-@Entity
-@Table(name="RESPONSAVEL")
+import noctua.entity.ResponsibleEntity;
+
+
 public class ResponsibleDTO {
 
-	@Id
-	@Column(name="ID_RESP")
-	private long id;
-
-	@Column(name="name")
 	@JsonProperty("name")
 	private String name;
 
-	@Column(name="surname")
 	@JsonProperty("surname")
 	private String surname;
 
-	@Column(name="email")
 	@JsonProperty("email")
 	private String email;
-
-	public long getId() {
-		return id;
+	
+	public ResponsibleDTO() {
+		// TODO Auto-generated constructor stub
 	}
-
-	public void setId(long id) {
-		this.id = id;
+	
+	public ResponsibleDTO(ResponsibleEntity responsible) {
+		this.name = responsible.getName();
+		this.surname = responsible.getSurname();
+		this.email = responsible.getEmail();
 	}
 
 	public String getName() {

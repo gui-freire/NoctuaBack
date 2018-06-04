@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import noctua.dao.VitalDao;
 import noctua.dto.Vital;
+import noctua.entity.VitalEntity;
 
 public class VitalDaoImpl implements VitalDao {
 	
@@ -13,39 +14,42 @@ public class VitalDaoImpl implements VitalDao {
 	
 	private Vital dto;
 
-	public VitalDaoImpl(EntityManager em) {
-		this.em = em;
+	public VitalDaoImpl() {
 	}
 	
 	@Override
-	public Vital searchLast(String email) {
-		// TODO Auto-generated method stub
-		return null;
+	public VitalEntity searchLast(int id) {
+		List<VitalEntity> list = this.em.createQuery("SELECT V FROM VITAL WHERE V.ID = " + id + " ORDER BY V.DIA AND V.MONTH AND V.YEAR").getResultList();
+		return list.get(0);
 	}
 
 	@Override
-	public List<Vital> searchDaily(String email, int day, int month) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<VitalEntity> searchDaily(int id, int day, int month) {
+		return this.em.createQuery("SELECT V FROM VITAL WHERE V.ID = " + id + " AND V.DIA = " + day + 
+				" AND V.MES = " + month + " ORDER BY V.DIA AND V.MONTH AND V.YEAR").getResultList();
 	}
 
 	@Override
-	public List<Vital> searchWeekly(String email, int week, int month) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<VitalEntity> searchWeekly(int id, int week, int month) {
+		return this.em.createQuery("SELECT V FROM VITAL WHERE V.ID = " + id + " AND V.SEMANA = " + week + 
+				" AND V.MES = " + month + " ORDER BY V.DIA AND V.MONTH AND V.YEAR").getResultList();
 	}
 
 	@Override
-	public List<Vital> searchMonthly(String email, int month) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<VitalEntity> searchMonthly(int id, int month) {
+		return this.em.createQuery("SELECT V FROM VITAL WHERE V.ID = " + id + 
+				" AND V.MES = " + month + " ORDER BY V.DIA AND V.MONTH AND V.YEAR").getResultList();
 	}
 
 	@Override
-	public void receiveData(Vital vital) {
+	public void receiveData(VitalEntity vital) {
 		em.getTransaction().begin();
 		em.persist(vital);
 		em.getTransaction().commit();
+	}
+	
+	public void setEntityManager(EntityManager em) {
+		this.em = em;
 	}
 
 }

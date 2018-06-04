@@ -1,6 +1,5 @@
 package noctua.impl.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,9 +8,7 @@ import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.jboss.logging.Logger;
 
 import noctua.dao.UserDao;
-import noctua.dto.UserDTO;
 import noctua.entity.UserEntity;
-import noctua.webservices.UserWebService;
 
 public class UserDaoImpl implements UserDao {
 
@@ -35,7 +32,7 @@ public class UserDaoImpl implements UserDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UserDTO> searchUser(String email, String password, String firebase) {
+	public List<UserEntity> searchUser(String email) {
 		return this.em.createQuery("SELECT C FROM CLIENTE C WHERE C.EMAIL = " + email).getResultList();
 	}
 
@@ -54,8 +51,9 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void updateUser(UserEntity user) {
-		// TODO Auto-generated method stub
-
+		em.getTransaction().begin();
+		em.merge(user);
+		em.getTransaction().commit();
 	}
 
 }

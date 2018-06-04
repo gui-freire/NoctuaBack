@@ -11,26 +11,33 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-@Entity
-@Table(name="DIARIO")
+import noctua.entity.DiaryEntity;
+import noctua.entity.UserEntity;
+
 public class Diary {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id")
-	private long id;
-	
-	@Column(name="feeling")
 	@JsonProperty("sentimento")
 	private String feeling;
 	
-	@Column(name="diary")
 	@JsonProperty("diario")
 	private String diary;
 	
-	@Column(name="data_dia_mes")
 	@JsonProperty("data")
 	private Date data;
+	
+	@JsonProperty("user")
+	private UserDTO user;
+	
+	public Diary() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Diary(DiaryEntity diary) {
+		this.feeling = diary.getFeeling();
+		this.diary = diary.getDiary();
+		this.data = diary.getData();
+		this.user = new UserDTO(diary.getUser());
+	}
 
 	public String getFeeling() {
 		return feeling;
@@ -56,10 +63,12 @@ public class Diary {
 		this.data = data;
 	}
 
-	public long getId() {
-		return id;
+	public UserDTO getUser() {
+		return user;
 	}
-	
-	
+
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
 
 }

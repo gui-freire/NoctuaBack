@@ -1,13 +1,18 @@
 package noctua.dao;
 
+import javax.persistence.EntityManager;
+
 import noctua.dto.ResponsibleDTO;
+import noctua.entity.ResponsibleEntity;
 
 public interface ResponsibleDao {
 	
-	public void createResponsible(ResponsibleDTO resp);
+	public void createResponsible(ResponsibleEntity resp);
 	
 	public ResponsibleDTO searchResponsible(String email);
 	
-	public void updateResponsible(ResponsibleDTO resp, String email);
+	public void updateResponsible(ResponsibleEntity resp);
+	
+	public void setEntityManager(EntityManager em);
 
 }

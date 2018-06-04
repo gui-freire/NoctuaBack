@@ -11,12 +11,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import noctua.dto.Vital;
+import noctua.impl.service.VitalServiceImpl;
 import noctua.service.VitalService;
 
 @Path("/dadosVitais")
 public class VitalWebService {
 
-	VitalService vitalService;
+	VitalService vitalService = new VitalServiceImpl();
 
 	List<Vital> vitalList = new ArrayList<Vital>();
 
@@ -24,7 +25,7 @@ public class VitalWebService {
 	@Path("/ultimo")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Vital searchLast(@PathParam("email") String email) { // busca os últimos dados no banco
+	public Vital searchLast(@PathParam("email") String email) {
 		Vital vital;
 		vital = vitalService.searchLast(email);
 		return vital;

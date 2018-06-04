@@ -1,14 +1,9 @@
 package noctua.dto;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import noctua.entity.ResponsibleEntity;
+import noctua.entity.UserEntity;
 
 public class UserDTO {
 
@@ -27,16 +22,28 @@ public class UserDTO {
 	@JsonProperty("firebaseId")
 	private long firebaseId;
 	
-	private String salt;
-	
 	@JsonProperty("resp")
 	private boolean resp;
 	
 	@JsonProperty("responsible")
-	@Nullable
 	private ResponsibleDTO dto;
 	
+	@JsonProperty("vital")
 	private Vital vital;
+	
+	public UserDTO() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public UserDTO(UserEntity user) {
+		this.name = user.getName();
+		this.surname = user.getSurname();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.firebaseId = user.getFirebaseId();
+		this.resp = user.isResp();
+		this.dto = new ResponsibleDTO(user.getResponsavel());
+	}
 
 	public String getName() {
 		return name;
@@ -86,28 +93,20 @@ public class UserDTO {
 		this.firebaseId = firebaseId;
 	}
 
-//	public ResponsibleDTO getDto() {
-//		return dto;
-//	}
-//
-//	public void setDto(ResponsibleDTO dto) {
-//		this.dto = dto;
-//	}
-
-//	public Vital getVital() {
-//		return vital;
-//	}
-//
-//	public void setVital(Vital vital) {
-//		this.vital = vital;
-//	}
-
-	public String getSalt() {
-		return salt;
+	public ResponsibleDTO getDto() {
+		return dto;
 	}
 
-	public void setSalt(String salt) {
-		this.salt = salt;
+	public void setDto(ResponsibleDTO dto) {
+		this.dto = dto;
+	}
+
+	public Vital getVital() {
+		return vital;
+	}
+
+	public void setVital(Vital vital) {
+		this.vital = vital;
 	}
 
 }

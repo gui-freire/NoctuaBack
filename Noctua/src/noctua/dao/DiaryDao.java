@@ -1,12 +1,15 @@
 package noctua.dao;
 
-import java.sql.Date;
+import javax.persistence.EntityManager;
 
 import noctua.dto.Diary;
+import noctua.entity.DiaryEntity;
 
 public interface DiaryDao {
 
-	public void sendDiary(String email, String diary, String feel, Date date);
+	public void sendDiary(DiaryEntity diary);
 	
-	public Diary searchDiary(String email, int day, int month);
+	public Diary searchDiary(DiaryEntity diary);
+	
+	public void setEntityManager(EntityManager em);
 }

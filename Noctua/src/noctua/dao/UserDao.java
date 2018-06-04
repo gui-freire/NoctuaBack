@@ -11,7 +11,7 @@ public interface UserDao {
 	
 	public void setEntityManager(EntityManager em);
 	
-	public List<UserDTO> searchUser(String email, String password, String firebase);
+	public List<UserEntity> searchUser(String email);
 	
 	public void createUser(UserEntity user);
 	

@@ -2,17 +2,22 @@ package noctua.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import noctua.dto.Vital;
+import noctua.entity.VitalEntity;
 
 public interface VitalDao {
 
-	public Vital searchLast(String email);
+	public VitalEntity searchLast(int id);
 	
-	public List<Vital> searchDaily(String email, int day, int month);
+	public List<VitalEntity> searchDaily(int id, int day, int month);
 	
-	public List<Vital> searchWeekly(String email, int week, int month);
+	public List<VitalEntity> searchWeekly(int id, int week, int month);
 	
-	public List<Vital> searchMonthly(String email, int month);
+	public List<VitalEntity> searchMonthly(int id, int month);
 	
-	public void receiveData(Vital vital);
+	public void receiveData(VitalEntity vital);
+	
+	public void setEntityManager(EntityManager em);
 }
