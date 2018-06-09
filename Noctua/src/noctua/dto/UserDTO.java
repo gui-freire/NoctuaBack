@@ -2,10 +2,12 @@ package noctua.dto;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import noctua.entity.ResponsibleEntity;
 import noctua.entity.UserEntity;
 
 public class UserDTO {
+	
+	@JsonProperty("id")
+	private int id;
 
 	@JsonProperty("name")
 	private String name;
@@ -20,13 +22,19 @@ public class UserDTO {
 	private String password;
 	
 	@JsonProperty("firebaseId")
-	private long firebaseId;
+	private String firebaseId;
 	
 	@JsonProperty("resp")
 	private boolean resp;
 	
-	@JsonProperty("responsible")
-	private ResponsibleDTO dto;
+	@JsonProperty("nameResp")
+	private String nomeResp;
+	
+	@JsonProperty("surnameResp")
+	private String surnameResp;
+	
+	@JsonProperty("emailResp")
+	private String emailResp;
 	
 	@JsonProperty("vital")
 	private Vital vital;
@@ -36,13 +44,16 @@ public class UserDTO {
 	}
 	
 	public UserDTO(UserEntity user) {
+		this.id = user.getId();
 		this.name = user.getName();
 		this.surname = user.getSurname();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.firebaseId = user.getFirebaseId();
 		this.resp = user.isResp();
-		this.dto = new ResponsibleDTO(user.getResponsavel());
+		this.nomeResp = user.getNomeResp();
+		this.surnameResp = user.getSurnameResp();
+		this.emailResp = user.getEmailResp();
 	}
 
 	public String getName() {
@@ -85,20 +96,36 @@ public class UserDTO {
 		this.resp = resp;
 	}
 
-	public long getFirebaseId() {
+	public String getFirebaseId() {
 		return firebaseId;
 	}
 
-	public void setFirebaseId(long firebaseId) {
+	public void setFirebaseId(String firebaseId) {
 		this.firebaseId = firebaseId;
 	}
 
-	public ResponsibleDTO getDto() {
-		return dto;
+	public String getNomeResp() {
+		return nomeResp;
 	}
 
-	public void setDto(ResponsibleDTO dto) {
-		this.dto = dto;
+	public void setNomeResp(String nomeResp) {
+		this.nomeResp = nomeResp;
+	}
+
+	public String getSurnameResp() {
+		return surnameResp;
+	}
+
+	public void setSurnameResp(String surnameResp) {
+		this.surnameResp = surnameResp;
+	}
+
+	public String getEmailResp() {
+		return emailResp;
+	}
+
+	public void setEmailResp(String emailResp) {
+		this.emailResp = emailResp;
 	}
 
 	public Vital getVital() {
@@ -109,4 +136,20 @@ public class UserDTO {
 		this.vital = vital;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+//	@JsonProperty("responsible")
+//    private void unpackNested(Map<String,Object> brand) {
+//        responsible.setName((String)brand.get("name"));
+//        responsible.setSurname((String)brand.get("surname"));
+//        responsible.setEmail((String)brand.get("surname"));
+//    }
+
+	
 }

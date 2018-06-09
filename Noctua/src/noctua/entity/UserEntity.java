@@ -25,11 +25,8 @@ public class UserEntity implements Serializable {
 	@Column(name="id_user")
 	private int id;
 	
-	@Column(name="nome")
+	@Column(name="name")
 	private String name;
-	
-	@Column(name="id_resp")
-	private long id_resp;
 	
 	@Column(name="surname")
 	private String surname;
@@ -41,15 +38,19 @@ public class UserEntity implements Serializable {
 	private String password;
 	
 	@Column(name="firebaseId")
-	private long firebaseId;
+	private String firebaseId;
 	
 	@Column(name="resp")
 	private boolean resp;
 	
-	@OneToOne
-	@JoinColumn(
-	    	name="RESPONSAVEL_ID", unique=true, nullable=false, updatable=false)
-	private ResponsibleEntity responsavel;
+	@Column(name="nameResp")
+	private String nomeResp;
+	
+	@Column(name="surnameResp")
+	private String surnameResp;
+	
+	@Column(name="emailResp")
+	private String emailResp;
 	
 	
 	public UserEntity() {
@@ -57,13 +58,16 @@ public class UserEntity implements Serializable {
 	}
 	
 	public UserEntity(UserDTO user) {
+		this.id = user.getId();
 		this.name = user.getName();
 		this.surname = user.getSurname();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.firebaseId = user.getFirebaseId();
 		this.resp = user.isResp();
-		this.responsavel = new ResponsibleEntity(user.getDto());
+		this.nomeResp = user.getNomeResp();
+		this.surnameResp = user.getSurnameResp();
+		this.emailResp = user.getEmailResp();
 	}
 
 	public String getName() {
@@ -72,14 +76,6 @@ public class UserEntity implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public long getId_resp() {
-		return id_resp;
-	}
-
-	public void setId_resp(long id_resp) {
-		this.id_resp = id_resp;
 	}
 
 	public String getSurname() {
@@ -106,11 +102,11 @@ public class UserEntity implements Serializable {
 		this.password = password;
 	}
 
-	public long getFirebaseId() {
+	public String getFirebaseId() {
 		return firebaseId;
 	}
 
-	public void setFirebaseId(long firebaseId) {
+	public void setFirebaseId(String firebaseId) {
 		this.firebaseId = firebaseId;
 	}
 
@@ -126,13 +122,28 @@ public class UserEntity implements Serializable {
 		return id;
 	}
 
-	public ResponsibleEntity getResponsavel() {
-		return responsavel;
+	public String getNomeResp() {
+		return nomeResp;
 	}
 
-	public void setResponsavel(ResponsibleEntity responsavel) {
-		this.responsavel = responsavel;
+	public void setNomeResp(String nomeResp) {
+		this.nomeResp = nomeResp;
 	}
-	
+
+	public String getSurnameResp() {
+		return surnameResp;
+	}
+
+	public void setSurnameResp(String surnameResp) {
+		this.surnameResp = surnameResp;
+	}
+
+	public String getEmailResp() {
+		return emailResp;
+	}
+
+	public void setEmailResp(String emailResp) {
+		this.emailResp = emailResp;
+	}
 	
 }

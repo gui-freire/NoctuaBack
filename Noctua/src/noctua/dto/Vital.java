@@ -1,6 +1,7 @@
 package noctua.dto;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,17 +18,17 @@ import noctua.entity.VitalEntity;
 
 public class Vital {
 
-	@JsonProperty("bpm")
+	@JsonProperty("heartbeat")
 	private String heartbeat;
 
 	@Column(name="pression")
 	private String pression;
 
-	@JsonProperty("oxigenacao")
+	@JsonProperty("oxig")
 	private String oxig;
 	
-	@JsonProperty("usuario")
-	private UserDTO idUsuario;
+	@JsonProperty("idUsuario")
+	private int idUsuario;
 	
 	@JsonProperty("data")
 	private Date data;
@@ -40,7 +41,7 @@ public class Vital {
 		this.heartbeat = vital.getHeartbeat();
 		this.pression = vital.getPression();
 		this.oxig = vital.getOxig();
-		this.idUsuario = new UserDTO(vital.getIdUsuario());
+		this.idUsuario = vital.getIdUsuario();
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(vital.getYear(), vital.getMonth(), vital.getDay());
@@ -71,11 +72,11 @@ public class Vital {
 		this.oxig = oxig;
 	}
 
-	public UserDTO getIdUsuario() {
+	public int getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(UserDTO idUsuario) {
+	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 

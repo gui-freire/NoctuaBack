@@ -1,6 +1,9 @@
 package noctua.impl.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -24,11 +27,11 @@ public class VitalServiceImpl implements VitalService {
 	private Logger LOG;
 
 	private List<Vital> vitalList = new ArrayList<Vital>();
-	
+
 	private VitalDao dao = new VitalDaoImpl();
-	
+
 	private UserDao userDao = new UserDaoImpl();
-	
+
 	public VitalServiceImpl() {
 		Configuration configure = new Configuration();
 		configure.configure();
@@ -39,15 +42,17 @@ public class VitalServiceImpl implements VitalService {
 	}
 
 	@Override
-	public Vital searchLast(String email) {
-		if (email.isEmpty() || email == null) {
+	public Vital searchLast(int id) {
+		if (id == 0) {
 			LOG.info("Usuário vazio");
 			return null;
 		}
 		try {
-			UserEntity user = userDao.searchUser(email).get(0);
-			VitalEntity entity = dao.searchLast(user.getId());
-			Vital vital = new Vital(entity);
+			VitalEntity entity = dao.searchLast(id);
+			Vital vital = new Vital();
+			if (entity != null) {
+				vital = new Vital(entity);
+			}
 			return vital;
 		} catch (Exception e) {
 			LOG.info("Algo deu errado ao consultar dados vitais: " + e.getMessage());
@@ -56,16 +61,17 @@ public class VitalServiceImpl implements VitalService {
 	}
 
 	@Override
-	public List<Vital> searchDaily(String email, int day, int month) {
-		if (email.isEmpty() || email == null) {
+	public List<Vital> searchDaily(int id, int day, int month) {
+		if (id == 0) {
 			LOG.info("Usuário vazio");
 			return null;
 		}
 		try {
-			UserEntity user = userDao.searchUser(email).get(0);
-			List<VitalEntity> list = dao.searchDaily(user.getId(), day, month);
-			for(int i = 0; i < list.size(); i++) {
-				vitalList.add(new Vital(list.get(i)));
+			List<VitalEntity> list = dao.searchDaily(id, day, month);
+			if (list != null) {
+				for (int i = 0; i < list.size(); i++) {
+					vitalList.add(new Vital(list.get(i)));
+				}
 			}
 			return vitalList;
 		} catch (Exception e) {
@@ -75,16 +81,17 @@ public class VitalServiceImpl implements VitalService {
 	}
 
 	@Override
-	public List<Vital> searchWeekly(String email, int week, int month) {
-		if (email == null || email.isEmpty()) {
-			LOG.info("Email vazio");
+	public List<Vital> searchWeekly(int id, int week, int month) {
+		if (id == 0) {
+			LOG.info("id vazio");
 			return null;
 		}
 		try {
-			UserEntity user = userDao.searchUser(email).get(0);
-			List<VitalEntity> list = dao.searchWeekly(user.getId(), week, month);
-			for(int i = 0; i < list.size(); i++) {
-				vitalList.add(new Vital(list.get(i)));
+			List<VitalEntity> list = dao.searchWeekly(id, week, month);
+			if (list != null) {
+				for (int i = 0; i < list.size(); i++) {
+					vitalList.add(new Vital(list.get(i)));
+				}
 			}
 			return vitalList;
 		} catch (Exception e) {
@@ -94,16 +101,17 @@ public class VitalServiceImpl implements VitalService {
 	}
 
 	@Override
-	public List<Vital> searchMonthly(String email, int month) {
-		if (email.isEmpty() || email == null) {
-			LOG.info("Email vazio");
+	public List<Vital> searchMonthly(int id, int month) {
+		if (id == 0) {
+			LOG.info("id vazio");
 			return null;
 		}
 		try {
-			UserEntity user = userDao.searchUser(email).get(0);
-			List<VitalEntity> list = dao.searchMonthly(user.getId(), month);
-			for(int i = 0; i < list.size(); i++) {
-				vitalList.add(new Vital(list.get(i)));
+			List<VitalEntity> list = dao.searchMonthly(id, month);
+			if (list != null) {
+				for (int i = 0; i < list.size(); i++) {
+					vitalList.add(new Vital(list.get(i)));
+				}
 			}
 			return vitalList;
 		} catch (Exception e) {
@@ -114,13 +122,19 @@ public class VitalServiceImpl implements VitalService {
 
 	@Override
 	public void receiveData(Vital vital) {
-		if(vital == null) {
+		if (vital == null) {
 			LOG.info("Dados enviados vazios");
 		}
 		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
 			VitalEntity entity = new VitalEntity(vital);
+			entity.setDay(date.getDate());
+			entity.setMonth(date.getMonth());
+			entity.setYear(date.getYear());
+
 			dao.receiveData(entity);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			LOG.info("Algo deu errado ao enviar dados para a base. " + e.getMessage());
 		}
 	}

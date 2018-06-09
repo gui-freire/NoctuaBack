@@ -24,7 +24,7 @@ public class ResponsibleDaoImpl implements ResponsibleDao {
 
 	@Override
 	public ResponsibleDTO searchResponsible(String email) {
-		return (ResponsibleDTO) this.em.createQuery("SELECT R FROM RESPONSAVEL R WHERE R.EMAIL = " + email).getResultList().get(0);
+		return (ResponsibleDTO) this.em.createQuery("SELECT R FROM ResponsibleEntity R WHERE R.email = " + email).getResultList().get(0);
 	}
 
 	@Override

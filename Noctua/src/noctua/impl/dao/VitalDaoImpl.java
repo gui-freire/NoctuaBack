@@ -9,36 +9,57 @@ import noctua.dto.Vital;
 import noctua.entity.VitalEntity;
 
 public class VitalDaoImpl implements VitalDao {
-	
+
 	private EntityManager em;
-	
+
 	private Vital dto;
 
 	public VitalDaoImpl() {
 	}
-	
+
 	@Override
 	public VitalEntity searchLast(int id) {
-		List<VitalEntity> list = this.em.createQuery("SELECT V FROM VITAL WHERE V.ID = " + id + " ORDER BY V.DIA AND V.MONTH AND V.YEAR").getResultList();
-		return list.get(0);
+		try {
+			List<VitalEntity> list = this.em.createQuery("SELECT V FROM VitalEntity V WHERE V.idUsuario = " + id
+					+ " ORDER BY V.day ASC, V.month DESC, V.year DESC").getResultList();
+			return list.get(0);
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<VitalEntity> searchDaily(int id, int day, int month) {
-		return this.em.createQuery("SELECT V FROM VITAL WHERE V.ID = " + id + " AND V.DIA = " + day + 
-				" AND V.MES = " + month + " ORDER BY V.DIA AND V.MONTH AND V.YEAR").getResultList();
+		try {
+			return this.em
+					.createQuery("SELECT V FROM VitalEntity V WHERE V.idUsuario = " + id + " AND V.day = " + day
+							+ " AND V.month = " + month + " ORDER BY V.day ASC, V.month DESC, V.year DESC")
+					.getResultList();
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<VitalEntity> searchWeekly(int id, int week, int month) {
-		return this.em.createQuery("SELECT V FROM VITAL WHERE V.ID = " + id + " AND V.SEMANA = " + week + 
-				" AND V.MES = " + month + " ORDER BY V.DIA AND V.MONTH AND V.YEAR").getResultList();
+		try {
+			return this.em
+					.createQuery("SELECT V FROM VitalEntity V WHERE V.idUsuario = " + id + " AND V.week = " + week
+							+ " AND V.month = " + month + " ORDER BY V.day ASC, V.month DESC, V.year DESC")
+					.getResultList();
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	@Override
 	public List<VitalEntity> searchMonthly(int id, int month) {
-		return this.em.createQuery("SELECT V FROM VITAL WHERE V.ID = " + id + 
-				" AND V.MES = " + month + " ORDER BY V.DIA AND V.MONTH AND V.YEAR").getResultList();
+		try {
+			return this.em.createQuery("SELECT V FROM VitalEntity V WHERE V.idUsuario = " + id + " AND V.month = "
+					+ month + " ORDER BY V.day ASC, V.month DESC, V.year DESC").getResultList();
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -47,7 +68,7 @@ public class VitalDaoImpl implements VitalDao {
 		em.persist(vital);
 		em.getTransaction().commit();
 	}
-	
+
 	public void setEntityManager(EntityManager em) {
 		this.em = em;
 	}

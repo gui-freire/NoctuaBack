@@ -22,14 +22,13 @@ public class UserWebService {
 	
 	private Logger LOG = LoggerFactory.logger(UserWebService.class);
 
-	@GET
+	@POST
 	@Path("/buscarUsuario")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserDTO searchUser(@PathParam("email") String email,
-			@PathParam("senha") String password,
-			@PathParam("chave") String firebaseKey) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public UserDTO searchUser(UserDTO user) {
 		UserDTO dto = new UserDTO();
-		dto = userService.searchUser(email, password, firebaseKey);
+		dto = userService.searchUser(user.getEmail(), user.getPassword(), user.getFirebaseId());
 		return dto;
 	}
 	

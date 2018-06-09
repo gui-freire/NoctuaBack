@@ -10,9 +10,13 @@ import org.hibernate.cfg.Configuration;
 import org.mindrot.jbcrypt.BCrypt;
 
 import noctua.dao.UserDao;
+import noctua.dao.VitalDao;
 import noctua.dto.UserDTO;
+import noctua.dto.Vital;
 import noctua.entity.UserEntity;
+import noctua.entity.VitalEntity;
 import noctua.impl.dao.UserDaoImpl;
+import noctua.impl.dao.VitalDaoImpl;
 import noctua.service.PasswordService;
 import noctua.service.UserService;
 
@@ -24,12 +28,15 @@ public class UserServiceImpl implements UserService {
 	
 	private UserDao dao = new UserDaoImpl();
 	
+	private VitalDao vital = new VitalDaoImpl();
+	
 	public UserServiceImpl() {
 		Configuration configure = new Configuration();
 		configure.configure();
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Noctua");
 		EntityManager em = factory.createEntityManager();
 		dao.setEntityManager(em);
+		vital.setEntityManager(em);
 	}
 
 	@Override
@@ -46,8 +53,14 @@ public class UserServiceImpl implements UserService {
 				UserDTO dto = new UserDTO(user);
 
 				userPassword = dto.getPassword();
-
-				if (BCrypt.checkpw(userPassword, password)) { 
+				
+				if (BCrypt.checkpw(password, userPassword)) { 
+					VitalEntity vitalEntity = vital.searchLast(user.getId());
+					Vital vitalDto = new Vital();
+					if(vitalEntity != null) {
+						vitalDto = new Vital(vitalEntity);
+					} 
+					dto.setVital(vitalDto);
 					return dto;
 				} else {
 					dto = new UserDTO();

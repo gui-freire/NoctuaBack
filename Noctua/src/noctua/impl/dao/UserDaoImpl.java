@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.eclipse.persistence.sessions.factories.SessionFactory;
+import org.hibernate.Session;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.hibernate.query.Query;
 import org.jboss.logging.Logger;
 
 import noctua.dao.UserDao;
@@ -33,7 +36,7 @@ public class UserDaoImpl implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserEntity> searchUser(String email) {
-		return this.em.createQuery("SELECT C FROM CLIENTE C WHERE C.EMAIL = " + email).getResultList();
+		return this.em.createQuery("SELECT C FROM UserEntity C WHERE C.email = ?1").setParameter(1, email).getResultList();
 	}
 
 	@Override

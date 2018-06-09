@@ -34,8 +34,8 @@ public class VitalEntity implements Serializable {
 	@Column(name="oxigenation")
 	private String oxig;
 	
-	@Column(name="user_id")
-	private UserEntity idUsuario;
+	@Column(name="id_user")
+	private int idUsuario;
 	
 	@Column(name="day")
 	private int day;
@@ -57,14 +57,7 @@ public class VitalEntity implements Serializable {
 		this.heartbeat = vital.getHeartbeat();
 		this.pression = vital.getPression();
 		this.oxig = vital.getOxig();
-		this.idUsuario = new UserEntity(vital.getIdUsuario());
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(vital.getData());
-		this.day = cal.DATE;
-		this.week = cal.WEEK_OF_MONTH;
-		this.month = cal.MONTH;
-		this.year = cal.YEAR;
+		this.idUsuario = vital.getIdUsuario();
 	}
 
 	public String getHeartbeat() {
@@ -91,11 +84,11 @@ public class VitalEntity implements Serializable {
 		this.oxig = oxig;
 	}
 
-	public UserEntity getIdUsuario() {
+	public int getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(UserEntity idUsuario) {
+	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
