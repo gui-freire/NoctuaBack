@@ -3,6 +3,7 @@ package noctua.impl.service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -27,6 +28,8 @@ public class VitalServiceImpl implements VitalService {
 	private Logger LOG;
 
 	private List<Vital> vitalList = new ArrayList<Vital>();
+	
+	private Vital vital = new Vital();
 
 	private VitalDao dao = new VitalDaoImpl();
 
@@ -49,9 +52,17 @@ public class VitalServiceImpl implements VitalService {
 		}
 		try {
 			VitalEntity entity = dao.searchLast(id);
-			Vital vital = new Vital();
 			if (entity != null) {
 				vital = new Vital(entity);
+				if(vital.getHeartbeat() == null) {
+					vital.setHeartbeat("-");
+					vital.setOxig("-");
+					vital.setPression("-");
+				}
+			} else {
+				vital.setHeartbeat("-");
+				vital.setOxig("-");
+				vital.setPression("-");
 			}
 			return vital;
 		} catch (Exception e) {
@@ -61,7 +72,7 @@ public class VitalServiceImpl implements VitalService {
 	}
 
 	@Override
-	public List<Vital> searchDaily(int id, int day, int month) {
+	public Vital searchDaily(int id, int day, int month) {
 		if (id == 0) {
 			LOG.info("Usuário vazio");
 			return null;
@@ -69,11 +80,12 @@ public class VitalServiceImpl implements VitalService {
 		try {
 			List<VitalEntity> list = dao.searchDaily(id, day, month);
 			if (list != null) {
-				for (int i = 0; i < list.size(); i++) {
-					vitalList.add(new Vital(list.get(i)));
+				for (VitalEntity v: list) {
+					vitalList.add(new Vital(v));
 				}
+				vital.setVital(vitalList);
 			}
-			return vitalList;
+			return vital;
 		} catch (Exception e) {
 			LOG.info("Algo deu errado ao consultar dados vitais: " + e.getMessage());
 			return null;
@@ -81,7 +93,7 @@ public class VitalServiceImpl implements VitalService {
 	}
 
 	@Override
-	public List<Vital> searchWeekly(int id, int week, int month) {
+	public Vital searchWeekly(int id, int week, int month) {
 		if (id == 0) {
 			LOG.info("id vazio");
 			return null;
@@ -89,11 +101,12 @@ public class VitalServiceImpl implements VitalService {
 		try {
 			List<VitalEntity> list = dao.searchWeekly(id, week, month);
 			if (list != null) {
-				for (int i = 0; i < list.size(); i++) {
-					vitalList.add(new Vital(list.get(i)));
+				for (VitalEntity v: list) {
+					vitalList.add(new Vital(v));
 				}
+				vital.setVital(vitalList);
 			}
-			return vitalList;
+			return vital;
 		} catch (Exception e) {
 			LOG.info("Algo deu errado ao consultar dados vitais: " + e.getMessage());
 			return null;
@@ -101,7 +114,7 @@ public class VitalServiceImpl implements VitalService {
 	}
 
 	@Override
-	public List<Vital> searchMonthly(int id, int month) {
+	public Vital searchMonthly(int id, int month) {
 		if (id == 0) {
 			LOG.info("id vazio");
 			return null;
@@ -109,11 +122,12 @@ public class VitalServiceImpl implements VitalService {
 		try {
 			List<VitalEntity> list = dao.searchMonthly(id, month);
 			if (list != null) {
-				for (int i = 0; i < list.size(); i++) {
-					vitalList.add(new Vital(list.get(i)));
+				for (VitalEntity v: list) {
+					vitalList.add(new Vital(v));
 				}
+				vital.setVital(vitalList);
 			}
-			return vitalList;
+			return vital;
 		} catch (Exception e) {
 			LOG.info("Algo deu errado ao consultar dados vitais: " + e.getMessage());
 			return null;
@@ -127,11 +141,12 @@ public class VitalServiceImpl implements VitalService {
 		}
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Date date = new Date();
+			Calendar date = Calendar.getInstance();
 			VitalEntity entity = new VitalEntity(vital);
-			entity.setDay(date.getDate());
-			entity.setMonth(date.getMonth());
-			entity.setYear(date.getYear());
+			entity.setDay(date.DATE);
+			entity.setMonth(date.MONTH);
+			entity.setYear(date.YEAR);
+			entity.setWeek(date.WEEK_OF_YEAR);
 
 			dao.receiveData(entity);
 		} catch (Exception e) {

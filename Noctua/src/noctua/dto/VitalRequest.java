@@ -13,7 +13,7 @@ public class VitalRequest {
 	@JsonProperty("week")
 	private int week;
 	
-	@JsonProperty("month")
+	@JsonProperty("mes")
 	private int mes;
 	
 	@JsonProperty("email")

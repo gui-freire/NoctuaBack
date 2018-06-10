@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +33,9 @@ public class Vital {
 	
 	@JsonProperty("data")
 	private Date data;
+	
+	@JsonProperty("vital")
+	private List<Vital> vital;
 	
 	public Vital() {
 		// TODO Auto-generated constructor stub
@@ -86,6 +90,14 @@ public class Vital {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public List<Vital> getVital() {
+		return vital;
+	}
+
+	public void setVital(List<Vital> vital) {
+		this.vital = vital;
 	}
 
 	

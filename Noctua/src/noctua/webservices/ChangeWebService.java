@@ -19,41 +19,34 @@ public class ChangeWebService {
 	private ChangeService service = new ChangeServiceImpl();
 	private Logger LOG;
 
-	@GET
-	@Path("/teste")
-	public String testar() {
-		return "olar";
-	}
-
 	@POST
 	@Path("/mudarUsuario")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String changeUser(UserDTO user) {
 		if (user == null) {
 			LOG.info("Usuário vazio");
-			return "FUNFOU VIADO";
+			return "{\"key\": 400}";
 		}
 
 		if (user.getEmail().isEmpty() || user.getEmail().equals("") || user.getEmail() == null) {
 			LOG.info("Email vazio");
-			return "FUNFOU VIADO";
+			return "{\"key\": 400}";
 		}
 
-		String ret = "FUNFOU VIADO";
 		service.changeUser(user);
-		return ret;
+		return "{\"key\": 200}";
 	}
 
 	@POST
 	@Path("/mudarResponsavel")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public int changeResponsible(ResponsibleDTO responsible) {
+	public String changeResponsible(ResponsibleDTO responsible) {
 		if (responsible == null) {
 			LOG.info("Responsável vazio");
 		}
 		int ret = 0;
 		service.changeResponsible(responsible);
-		return ret;
+		return "{\"key\": 200}";
 	}
 	
 }

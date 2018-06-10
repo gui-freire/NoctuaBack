@@ -27,7 +27,7 @@ public class UserDTO {
 	@JsonProperty("resp")
 	private boolean resp;
 	
-	@JsonProperty("nameResp")
+	@JsonProperty("nomeResp")
 	private String nomeResp;
 	
 	@JsonProperty("surnameResp")

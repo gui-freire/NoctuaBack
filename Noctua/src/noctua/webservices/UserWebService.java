@@ -35,13 +35,13 @@ public class UserWebService {
 	@POST
 	@Path("/criarUsuario")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public int createUser(UserDTO dto) {
+	public String createUser(UserDTO dto) {
 		try {
 			userService.createUser(dto);
-			return 200;
+			return "{\"key\": 200}";
 		} catch (Exception e) {
 			LOG.info("Algo deu errado! " + e.getMessage());
-			return 400;
+			return "{\"key\": 400}";
 		}
 	}
 	

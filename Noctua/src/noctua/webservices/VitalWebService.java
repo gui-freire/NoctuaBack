@@ -21,13 +21,15 @@ public class VitalWebService {
 	VitalService vitalService = new VitalServiceImpl();
 
 	List<Vital> vitalList = new ArrayList<Vital>();
+	
+	private Vital vital = new Vital();
 
 	@POST
 	@Path("/ultimo")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Vital searchLast(VitalRequest request) {
-		Vital vital = new Vital();
+		vital = new Vital();
 		vital = vitalService.searchLast(request.getId());
 		return vital;
 	}
@@ -36,27 +38,27 @@ public class VitalWebService {
 	@Path("/diario")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Vital> searchDaily(VitalRequest request) {
-		vitalList = vitalService.searchDaily(request.getId(), request.getDay(), request.getMes());
-		return vitalList;
+	public Vital searchDaily(VitalRequest request) {
+		vital = vitalService.searchDaily(request.getId(), request.getDay(), request.getMes());
+		return vital;
 	}
 
 	@POST
 	@Path("/semanal")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Vital> searchWeekly(VitalRequest request) {
-		vitalList = vitalService.searchWeekly(request.getId(), request.getWeek(), request.getMes());
-		return vitalList;
+	public Vital searchWeekly(VitalRequest request) {
+		vital = vitalService.searchWeekly(request.getId(), request.getWeek(), request.getMes());
+		return vital;
 	}
 
 	@POST
 	@Path("/mensal")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Vital> searchMonthly(VitalRequest request) {
-		vitalList = vitalService.searchMonthly(request.getId(), request.getMes());
-		return vitalList;
+	public Vital searchMonthly(VitalRequest request) {
+		vital = vitalService.searchMonthly(request.getId(), request.getMes());
+		return vital;
 	}
 
 }
