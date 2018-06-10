@@ -30,7 +30,7 @@ public class DiaryServiceImpl implements DiaryService {
 
 	@Override
 	public int sendDiary(Diary diary) {
-		if (diary.getUser() == null || diary == null) {
+		if (diary.getUser() == 0 || diary == null) {
 			LOG.info("Email vazio");
 			return 400;
 		}

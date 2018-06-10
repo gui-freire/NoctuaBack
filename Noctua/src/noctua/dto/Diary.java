@@ -26,7 +26,7 @@ public class Diary {
 	private Date data;
 	
 	@JsonProperty("user")
-	private UserDTO user;
+	private int user;
 	
 	public Diary() {
 		// TODO Auto-generated constructor stub
@@ -36,7 +36,7 @@ public class Diary {
 		this.feeling = diary.getFeeling();
 		this.diary = diary.getDiary();
 		this.data = diary.getData();
-		this.user = new UserDTO(diary.getUser());
+		this.user = diary.getUser();
 	}
 
 	public String getFeeling() {
@@ -63,11 +63,11 @@ public class Diary {
 		this.data = data;
 	}
 
-	public UserDTO getUser() {
+	public int getUser() {
 		return user;
 	}
 
-	public void setUser(UserDTO user) {
+	public void setUser(int user) {
 		this.user = user;
 	}
 

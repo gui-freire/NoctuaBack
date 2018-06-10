@@ -34,7 +34,7 @@ public class DiaryEntity implements Serializable {
 	private Date data;
 	
 	@Column(name="id_user")
-	private UserEntity user;
+	private int user;
 
 	public DiaryEntity() {
 		super();
@@ -44,7 +44,7 @@ public class DiaryEntity implements Serializable {
 		this.feeling = diary.getFeeling();
 		this.diary = diary.getDiary();
 		this.data = diary.getData();
-		this.user = new UserEntity(diary.getUser());
+		this.user = diary.getUser();
 	}
 
 	public String getFeeling() {
@@ -71,11 +71,11 @@ public class DiaryEntity implements Serializable {
 		this.data = data;
 	}
 
-	public UserEntity getUser() {
+	public int getUser() {
 		return user;
 	}
 
-	public void setUser(UserEntity user) {
+	public void setUser(int user) {
 		this.user = user;
 	}
 
