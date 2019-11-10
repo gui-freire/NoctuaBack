@@ -1,6 +1,4 @@
-package br.com.noctua.request;
-
-import br.com.noctua.dto.Notification;
+package br.com.noctua.firebase.domain;
 
 public class FirebaseRequest {
 

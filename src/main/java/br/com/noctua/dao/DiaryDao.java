@@ -1,15 +1,16 @@
 package br.com.noctua.dao;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
-import br.com.noctua.dto.Diary;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import br.com.noctua.entity.DiaryEntity;
 
-public interface DiaryDao {
+public interface DiaryDao extends JpaRepository<DiaryEntity, Long>{
 
-	public void sendDiary(DiaryEntity diary);
+	public DiaryEntity save(DiaryEntity diary);
 	
-	public Diary searchDiary(DiaryEntity diary);
-	
-	public void setEntityManager(EntityManager em);
+	public List<DiaryEntity> findAllByUser(long id);
+
+	public List<DiaryEntity> findAll();
 }

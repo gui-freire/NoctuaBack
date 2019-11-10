@@ -2,35 +2,37 @@ package br.com.noctua.dto;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import br.com.noctua.entity.DiaryEntity;
-import br.com.noctua.entity.UserEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class Diary {
 
+	@Getter
+	@Setter
 	@JsonProperty("sentimento")
 	private String feeling;
 	
+	@Getter
+	@Setter
 	@JsonProperty("diario")
 	private String diary;
 	
+	@Getter
+	@Setter
 	@JsonProperty("data")
 	private Date data;
 	
+	@Getter
+	@Setter
 	@JsonProperty("user")
-	private int user;
-	
-	public Diary() {
-		// TODO Auto-generated constructor stub
-	}
+	private long user;
 	
 	public Diary(DiaryEntity diary) {
 		this.feeling = diary.getFeeling();
@@ -38,37 +40,4 @@ public class Diary {
 		this.data = diary.getData();
 		this.user = diary.getUser();
 	}
-
-	public String getFeeling() {
-		return feeling;
-	}
-
-	public void setFeeling(String feeling) {
-		this.feeling = feeling;
-	}
-
-	public String getDiary() {
-		return diary;
-	}
-
-	public void setDiary(String diary) {
-		this.diary = diary;
-	}
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public int getUser() {
-		return user;
-	}
-
-	public void setUser(int user) {
-		this.user = user;
-	}
-
 }

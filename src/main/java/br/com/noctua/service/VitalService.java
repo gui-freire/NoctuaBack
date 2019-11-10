@@ -1,7 +1,5 @@
 package br.com.noctua.service;
 
-import java.util.List;
-
 import br.com.noctua.dto.Vital;
 
 public interface VitalService {
@@ -14,6 +12,6 @@ public interface VitalService {
 
 	public Vital searchMonthly(int id, int month);
 	
-	public void receiveData(Vital vital);
+	public Vital receiveData(Vital vital);
 
 }

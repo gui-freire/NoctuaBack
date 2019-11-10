@@ -1,18 +1,16 @@
 package br.com.noctua.dao;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
-import br.com.noctua.dto.ResponsibleDTO;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import br.com.noctua.entity.ResponsibleEntity;
 
-public interface ResponsibleDao {
+public interface ResponsibleDao extends JpaRepository<ResponsibleEntity, Long>{
 	
-	public void createResponsible(ResponsibleEntity resp);
+	public ResponsibleEntity save(ResponsibleEntity responsible);
 	
-	public ResponsibleDTO searchResponsible(String email);
+	public ResponsibleEntity findByEmail(String email);
 	
-	public void updateResponsible(ResponsibleEntity resp);
-	
-	public void setEntityManager(EntityManager em);
-
+	public List<ResponsibleEntity> findAll();
 }

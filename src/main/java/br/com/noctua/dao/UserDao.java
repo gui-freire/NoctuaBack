@@ -2,18 +2,16 @@ package br.com.noctua.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.noctua.dto.UserDTO;
 import br.com.noctua.entity.UserEntity;
 
-public interface UserDao {
+public interface UserDao extends JpaRepository<UserEntity, Long> {
 	
-	public void setEntityManager(EntityManager em);
+	public UserEntity findByEmail(String email);
 	
-	public List<UserEntity> searchUser(String email);
+	public List<UserEntity> findAll();
 	
-	public void createUser(UserEntity user);
-	
-	public void updateUser(UserEntity user);	
+	public UserEntity save(UserEntity user);
 }

@@ -4,5 +4,5 @@ import br.com.noctua.dto.Diary;
 
 public interface DiaryService {
 
-	public int sendDiary(Diary diary);
+	public Diary sendDiary(Diary diary);
 }

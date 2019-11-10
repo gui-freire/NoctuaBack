@@ -2,22 +2,24 @@ package br.com.noctua.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import br.com.noctua.dto.Vital;
 import br.com.noctua.entity.VitalEntity;
 
-public interface VitalDao {
+public interface VitalDao extends JpaRepository<VitalEntity, Long> {
 
-	public VitalEntity searchLast(int id);
-	
-	public List<VitalEntity> searchDaily(int id, int day, int month);
-	
-	public List<VitalEntity> searchWeekly(int id, int week, int month);
-	
-	public List<VitalEntity> searchMonthly(int id, int month);
-	
-	public void receiveData(VitalEntity vital);
-	
-	public void setEntityManager(EntityManager em);
+	public VitalEntity findByIdUsuario(long id);
+
+	@Query("SELECT V FROM VitalEntity V WHERE V.idUsuario = id AND V.day = day AND V.month = month ORDER BY V.day ASC, V.month DESC, V.year DESC")
+	public List<VitalEntity> retrieveByDay(@Param("id") long id, @Param("day") int day, @Param("month") int month);
+
+	@Query("SELECT V FROM VitalEntity V WHERE V.idUsuario = id AND V.week = week AND V.month = month ORDER BY V.day ASC, V.month DESC, V.year DESC")
+	public List<VitalEntity> retrieveByWeek(@Param("id") long id, @Param("week") int week, @Param("month") int month);
+
+	@Query("SELECT V FROM VitalEntity V WHERE V.idUsuario = id AND V.month = month + ORDER BY V.day ASC, V.month DESC, V.year DESC")
+	public List<VitalEntity> retrieveByMonth(@Param("id") long id, @Param("month") int month);
+
+	public VitalEntity save(VitalEntity vital);
 }

@@ -1,28 +1,19 @@
-package br.com.noctua.impl.service;
+package br.com.noctua.service.impl;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.hibernate.cfg.Configuration;
-
-import br.com.noctua.dao.UserDao;
 import br.com.noctua.dao.VitalDao;
 import br.com.noctua.dto.Vital;
-import br.com.noctua.entity.UserEntity;
 import br.com.noctua.entity.VitalEntity;
-import br.com.noctua.impl.dao.UserDaoImpl;
-import br.com.noctua.impl.dao.VitalDaoImpl;
 import br.com.noctua.service.VitalService;
 
+@Service
 public class VitalServiceImpl implements VitalService {
 
 	private Logger LOG;
@@ -31,18 +22,8 @@ public class VitalServiceImpl implements VitalService {
 	
 	private Vital vital = new Vital();
 
-	private VitalDao dao = new VitalDaoImpl();
-
-	private UserDao userDao = new UserDaoImpl();
-
-	public VitalServiceImpl() {
-		Configuration configure = new Configuration();
-		configure.configure();
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Noctua");
-		EntityManager em = factory.createEntityManager();
-		dao.setEntityManager(em);
-		userDao.setEntityManager(em);
-	}
+	@Autowired
+	private VitalDao dao;
 
 	@Override
 	public Vital searchLast(int id) {
@@ -51,7 +32,7 @@ public class VitalServiceImpl implements VitalService {
 			return null;
 		}
 		try {
-			VitalEntity entity = dao.searchLast(id);
+			VitalEntity entity = dao.findByIdUsuario(id);
 			if (entity != null) {
 				vital = new Vital(entity);
 				if(vital.getHeartbeat() == null) {
@@ -78,7 +59,7 @@ public class VitalServiceImpl implements VitalService {
 			return null;
 		}
 		try {
-			List<VitalEntity> list = dao.searchDaily(id, day, month);
+			List<VitalEntity> list = dao.retrieveByDay(id, day, month);
 			if (list != null) {
 				for (VitalEntity v: list) {
 					vitalList.add(new Vital(v));
@@ -99,7 +80,7 @@ public class VitalServiceImpl implements VitalService {
 			return null;
 		}
 		try {
-			List<VitalEntity> list = dao.searchWeekly(id, week, month);
+			List<VitalEntity> list = dao.retrieveByWeek(id, week, month);
 			if (list != null) {
 				for (VitalEntity v: list) {
 					vitalList.add(new Vital(v));
@@ -120,7 +101,7 @@ public class VitalServiceImpl implements VitalService {
 			return null;
 		}
 		try {
-			List<VitalEntity> list = dao.searchMonthly(id, month);
+			List<VitalEntity> list = dao.retrieveByMonth(id, month);
 			if (list != null) {
 				for (VitalEntity v: list) {
 					vitalList.add(new Vital(v));
@@ -135,22 +116,23 @@ public class VitalServiceImpl implements VitalService {
 	}
 
 	@Override
-	public void receiveData(Vital vital) {
+	public Vital receiveData(Vital vital) {
 		if (vital == null) {
 			LOG.info("Dados enviados vazios");
+			return new Vital();
 		}
 		try {
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Calendar date = Calendar.getInstance();
+			LocalDate date = LocalDate.now();
 			VitalEntity entity = new VitalEntity(vital);
-			entity.setDay(date.DATE);
-			entity.setMonth(date.MONTH);
-			entity.setYear(date.YEAR);
-			entity.setWeek(date.WEEK_OF_YEAR);
-
-			dao.receiveData(entity);
+			entity.setDay(date.getDayOfMonth());
+			entity.setMonth(date.getMonthValue());
+			entity.setYear(date.getYear());
+			entity = dao.save(entity);
+			
+			return new Vital(entity);
 		} catch (Exception e) {
 			LOG.info("Algo deu errado ao enviar dados para a base. " + e.getMessage());
+			return null;
 		}
 	}
 

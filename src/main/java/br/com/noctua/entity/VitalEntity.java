@@ -1,19 +1,24 @@
 package br.com.noctua.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Calendar;
 
-import javax.persistence.*;
-
-import org.codehaus.jackson.annotate.JsonProperty;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import br.com.noctua.dto.Vital;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Entity implementation class for Entity: VitalEntity
  *
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="VITAL")
 public class VitalEntity implements Serializable {
@@ -21,37 +26,51 @@ public class VitalEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
+	@Getter
+	@Setter
 	@Id
 	@Column(name="id_vital")
 	private long id;
 
+	@Getter
+	@Setter
 	@Column(name="heartbeat")
 	private String heartbeat;
 
+	@Getter
+	@Setter
 	@Column(name="pression")
 	private String pression;
 
+	@Getter
+	@Setter
 	@Column(name="oxigenation")
 	private String oxig;
 	
+	@Getter
+	@Setter
 	@Column(name="id_user")
-	private int idUsuario;
+	private long idUsuario;
 	
+	@Getter
+	@Setter
 	@Column(name="day")
 	private int day;
 	
+	@Getter
+	@Setter
 	@Column(name="week")
 	private int week;
 	
+	@Getter
+	@Setter
 	@Column(name="month")
 	private int month;
 	
+	@Getter
+	@Setter
 	@Column(name="year")
 	private int year;
-	
-	public VitalEntity() {
-		super();
-	}
 	
 	public VitalEntity(Vital vital) {
 		this.heartbeat = vital.getHeartbeat();
@@ -59,75 +78,4 @@ public class VitalEntity implements Serializable {
 		this.oxig = vital.getOxig();
 		this.idUsuario = vital.getIdUsuario();
 	}
-
-	public String getHeartbeat() {
-		return heartbeat;
-	}
-
-	public void setHeartbeat(String heartbeat) {
-		this.heartbeat = heartbeat;
-	}
-
-	public String getPression() {
-		return pression;
-	}
-
-	public void setPression(String pression) {
-		this.pression = pression;
-	}
-
-	public String getOxig() {
-		return oxig;
-	}
-
-	public void setOxig(String oxig) {
-		this.oxig = oxig;
-	}
-
-	public int getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	public int getDay() {
-		return day;
-	}
-
-	public void setDay(int day) {
-		this.day = day;
-	}
-
-	public int getWeek() {
-		return week;
-	}
-
-	public void setWeek(int week) {
-		this.week = week;
-	}
-
-	public int getMonth() {
-		return month;
-	}
-
-	public void setMonth(int month) {
-		this.month = month;
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	public void setYear(int year) {
-		this.year = year;
-	}
-
-	public long getId() {
-		return id;
-	}
-	
-	
-   
 }

@@ -17,7 +17,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
-import br.com.noctua.dto.Notification;
+import br.com.noctua.firebase.domain.Notification;
 
 public class Firebase {
 

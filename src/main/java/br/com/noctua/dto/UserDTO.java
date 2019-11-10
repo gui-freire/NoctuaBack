@@ -1,17 +1,24 @@
 package br.com.noctua.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import br.com.noctua.entity.UserEntity;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @JsonInclude
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
 public class UserDTO {
 	
 	@Getter
 	@Setter
-	private int id;
+	private long id;
 
 	@Getter
 	@Setter
@@ -35,27 +42,11 @@ public class UserDTO {
 	
 	@Getter
 	@Setter
-	private boolean resp;
-	
-	@Getter
-	@Setter
-	private String nomeResp;
-	
-	@Getter
-	@Setter
-	private String surnameResp;
-	
-	@Getter
-	@Setter
-	private String emailResp;
+	private List<ResponsibleDTO> responsible;
 	
 	@Getter
 	@Setter
 	private Vital vital;
-	
-	public UserDTO() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	public UserDTO(UserEntity user) {
 		this.id = user.getId();
@@ -64,9 +55,5 @@ public class UserDTO {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.firebaseId = user.getFirebaseId();
-		this.resp = user.isResp();
-		this.nomeResp = user.getNomeResp();
-		this.surnameResp = user.getSurnameResp();
-		this.emailResp = user.getEmailResp();
 	}
 }
