@@ -44,10 +44,6 @@ public class UserDTO {
 	@Setter
 	private List<ResponsibleDTO> responsible;
 	
-	@Getter
-	@Setter
-	private Vital vital;
-	
 	public UserDTO(UserEntity user) {
 		this.id = user.getId();
 		this.name = user.getName();

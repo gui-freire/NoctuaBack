@@ -9,13 +9,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.noctua.dao.ResponsibleDao;
 import br.com.noctua.dao.UserDao;
-import br.com.noctua.dao.VitalDao;
 import br.com.noctua.dto.ResponsibleDTO;
 import br.com.noctua.dto.UserDTO;
-import br.com.noctua.dto.Vital;
 import br.com.noctua.entity.ResponsibleEntity;
 import br.com.noctua.entity.UserEntity;
-import br.com.noctua.entity.VitalEntity;
 import br.com.noctua.exceptions.IncorrectPasswordException;
 import br.com.noctua.service.UserResponsibleService;
 import br.com.noctua.service.UserService;
@@ -29,9 +26,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao dao;
 
-	@Autowired
-	private VitalDao vital;
-	
 	@Autowired
 	private ResponsibleDao responsibleDao;
 	
@@ -49,12 +43,6 @@ public class UserServiceImpl implements UserService {
 			if (utils.comparePasswords(password, dto.getPassword())) {
 				dto.setResponsible(userResponsible.findResponsibles(user.getId()));
 				
-				VitalEntity vitalEntity = vital.findByIdUsuario(user.getId());
-				Vital vitalDto = new Vital();
-				if (vitalEntity != null) {
-					vitalDto = new Vital(vitalEntity);
-				}
-				dto.setVital(vitalDto);
 				return dto;
 			} else {
 				String msgError = "Senha incorreta";

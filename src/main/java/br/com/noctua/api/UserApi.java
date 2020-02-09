@@ -22,7 +22,7 @@ public class UserApi {
 	@Autowired
 	private UserService service;
 
-	private Logger LOG = LoggerFactory.getLogger(UserApi.class);
+	private final Logger LOG = LoggerFactory.getLogger(UserApi.class);
 
 	@RequestMapping(method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDTO> searchUser(@RequestParam(value = "email") String email,

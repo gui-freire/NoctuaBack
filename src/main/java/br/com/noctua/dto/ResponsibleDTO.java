@@ -27,6 +27,21 @@ public class ResponsibleDTO {
 	@JsonProperty("email")
 	private String email;
 	
+	@Getter
+	@Setter
+	@JsonProperty("password")
+	private String password;
+	
+	@Getter
+	@Setter
+	@JsonProperty("firebase")
+	private String firebaseId;
+	
+	@Getter
+	@Setter
+	@JsonProperty("user")
+	private UserDTO user;
+	
 	public ResponsibleDTO(ResponsibleEntity responsible) {
 		this.name = responsible.getName();
 		this.surname = responsible.getSurname();
